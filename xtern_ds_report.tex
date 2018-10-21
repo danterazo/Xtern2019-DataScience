@@ -149,7 +149,7 @@ default settings.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{require}\NormalTok{(DataExplorer)   }\CommentTok{# package that provides additional visualization tools for data analysis}
+\KeywordTok{require}\NormalTok{(DataExplorer)  }\CommentTok{# package that provides additional visualization tools for data analysis}
 \end{Highlighting}
 \end{Shaded}
 
@@ -159,8 +159,8 @@ default settings.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{appStore <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\DataTypeTok{file=}\StringTok{"AppStoreAssessmentDataScience.csv"}\NormalTok{)}
-\NormalTok{appStore.og <-}\StringTok{ }\NormalTok{appStore }\CommentTok{# store copy of the original before preprocessing}
+\NormalTok{appStore <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\DataTypeTok{file =} \StringTok{"AppStoreAssessmentDataScience.csv"}\NormalTok{)}
+\NormalTok{appStore.og <-}\StringTok{ }\NormalTok{appStore  }\CommentTok{# store copy of the original before preprocessing}
 \end{Highlighting}
 \end{Shaded}
 
@@ -183,7 +183,7 @@ no missing values, so imputation is not necessary.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(appStore)) }\CommentTok{# no missing values in dataset}
+\KeywordTok{sum}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(appStore))  }\CommentTok{# no missing values in dataset}
 \end{Highlighting}
 \end{Shaded}
 
@@ -199,7 +199,7 @@ in case it can be used later.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{sum}\NormalTok{(appStore[}\DecValTok{1}\NormalTok{] }\OperatorTok{==}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(appStore))) }\CommentTok{# checks if entry equals row number; 18 matches}
+\KeywordTok{sum}\NormalTok{(appStore[}\DecValTok{1}\NormalTok{] }\OperatorTok{==}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(appStore)))  }\CommentTok{# checks if entry equals row number; 18 matches}
 \end{Highlighting}
 \end{Shaded}
 
@@ -209,7 +209,7 @@ in case it can be used later.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{cor}\NormalTok{(appStore}\OperatorTok{$}\NormalTok{X, }\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{,}\KeywordTok{nrow}\NormalTok{(appStore)))    }\CommentTok{# computes correlation between two vectors}
+\KeywordTok{cor}\NormalTok{(appStore}\OperatorTok{$}\NormalTok{X, }\KeywordTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\KeywordTok{nrow}\NormalTok{(appStore)))  }\CommentTok{# computes correlation between two vectors}
 \end{Highlighting}
 \end{Shaded}
 
@@ -219,19 +219,19 @@ in case it can be used later.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{appStore.V1 <-}\StringTok{ }\NormalTok{appStore[}\DecValTok{1}\NormalTok{]                }\CommentTok{# save first column as new variable}
-\NormalTok{appStore <-}\StringTok{ }\NormalTok{appStore[,}\DecValTok{2}\OperatorTok{:}\DecValTok{9}\NormalTok{]                }\CommentTok{# remove first column from dataset}
+\NormalTok{appStore.V1 <-}\StringTok{ }\NormalTok{appStore[}\DecValTok{1}\NormalTok{]  }\CommentTok{# save first column as new variable}
+\NormalTok{appStore <-}\StringTok{ }\NormalTok{appStore[, }\DecValTok{2}\OperatorTok{:}\DecValTok{9}\NormalTok{]  }\CommentTok{# remove first column from dataset}
 \end{Highlighting}
 \end{Shaded}
 
 The \(\textit{app\_content\_rating}\) column contains integers with a
-``+'' character appended to the end. I removed the plusses and converted
+``+'' character appended to the end. I removed the pluses and converted
 the resulting strings to integers. This will allow me to take averages
-and analyze this vector in the future.
+and analyze this vector if I need to.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{appStore}\OperatorTok{$}\NormalTok{app_content_rating <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{gsub}\NormalTok{(}\StringTok{'}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{+'}\NormalTok{,}\StringTok{''}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_content_rating))}
+\NormalTok{appStore}\OperatorTok{$}\NormalTok{app_content_rating <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{gsub}\NormalTok{(}\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{+"}\NormalTok{, }\StringTok{""}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_content_rating))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -266,7 +266,7 @@ entries, I elected to simply remove them.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{appStore}\OperatorTok{$}\NormalTok{app_total_supported_langs[appStore}\OperatorTok{$}\NormalTok{app_total_supported_langs }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{] <-}\StringTok{ }\OtherTok{NA} \CommentTok{# replace 0's with NA}
+\NormalTok{appStore}\OperatorTok{$}\NormalTok{app_total_supported_langs[appStore}\OperatorTok{$}\NormalTok{app_total_supported_langs }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{] <-}\StringTok{ }\OtherTok{NA}  \CommentTok{# replace 0's}
 \NormalTok{appStore <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(appStore)}
 \end{Highlighting}
 \end{Shaded}
@@ -274,39 +274,35 @@ entries, I elected to simply remove them.
 \hypertarget{data-analysis}{%
 \subsection{Data Analysis}\label{data-analysis}}
 
-Now that the data has been processed, we can begin to make sense of it.
-I begin by making density plots of every column in the dataset. The
+Now that the data has been processed, I can begin to make sense of it. I
+began by making density plots of every column in the dataset. The
 \(\textit{DataExplorer}\) library makes it easy to view all plots at
 once.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot_density}\NormalTok{(appStore) }\CommentTok{# function from DataExplorer library}
+\KeywordTok{plot_density}\NormalTok{(appStore)  }\CommentTok{# function from DataExplorer library}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{xtern_ds_report_files/figure-latex/analysis1-1.pdf}
+\begin{center}\includegraphics{Plots/analysis1-1} \end{center}
+\newpage
 
 I immediately noticed that \(\texttt{appStore\$id}\) is a a left-skewed
 bimodal distribution. The ID is simply a number and won't be useful in
 identifying trends in the App Store, so I moved on to other columns. The
-majority of apps on the market are less than 1000MB (\$10\^{}9 =
-1,000,000,000 \$bytes). Depending on how OSXtern and other supported
-platforms defines a gigabyte, you could say that most apps are less than
-1GB as well.
+majority of apps on the market are less than 1000MB
+(\(10^9 = 1,000,000,000\) bytes). Depending on how OSXtern and other
+supported platforms defines a gigabyte, you could say that most apps are
+less than 1GB as well.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot_correlation}\NormalTok{(appStore[,}\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(appStore)], }\DataTypeTok{maxcat=}\DecValTok{12}\NormalTok{) }\CommentTok{# function from DataExplorer library}
+\KeywordTok{plot_correlation}\NormalTok{(appStore[, }\DecValTok{2}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(appStore)], }\DataTypeTok{maxcat =} \DecValTok{24}\NormalTok{)  }\CommentTok{# function from DataExplorer library}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-## Warning in dummify(data, maxcat = maxcat): Ignored all discrete features
-## since `maxcat` set to 12 categories!
-\end{verbatim}
-
-\includegraphics{xtern_ds_report_files/figure-latex/analysis2-1.pdf}
+\begin{center}\includegraphics{Plots/analysis2-1} \end{center}
 
 \(\textit{DataExplorer}\)'s \(\texttt{plot\_correlation()}\) function
 produced a nice correlation graph of every feature. I didn't learn
@@ -317,24 +313,37 @@ assign numbers to each value before working with them, but
 \(\textit{DataExplorer}\) has a visualization solution that negates the
 need to first quantify the genres.
 
+Surprisingly, app price and size have a somewhat strong correlation with
+a correlation coefficient (\(r\)) of 0.18. \(r^2=0.0324\), which means
+that only 3.24\% of the variation is explained by \(r\). Another strange
+observation is that \(r=0.14\) for \(\texttt{app\_content\_rating}\) and
+\(\texttt{app\_size\_bytes}\). Less surprising and somewhat strong
+correlations include: \(\texttt{app\_rating\_count}\) vs.
+\(\texttt{app\_total\_supported\_langs}\) (0.14) and
+\(\texttt{app\_rating}\) vs. \(\texttt{app\_total\_supported\_langs}\)
+(0.17). Finally, games tend to be bigger in size (bytes) and have higher
+ratings than other apps.
+
+\newpage
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{plot_bar}\NormalTok{(appStore}\OperatorTok{$}\NormalTok{app_genre, }\DataTypeTok{title=}\StringTok{"Frequency of Genres in the App Store"}\NormalTok{)}
+\KeywordTok{plot_bar}\NormalTok{(appStore}\OperatorTok{$}\NormalTok{app_genre, }\DataTypeTok{title =} \StringTok{"Frequency of App Genres in the App Store"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{xtern_ds_report_files/figure-latex/analysis3-1.pdf}
+\begin{center}\includegraphics{Plots/analysis3-1} \end{center}
 
 The `Games' category stands out as an outlier. The number of `Games'
-apps (3832) is over 7 times gerater than the number of `Entertainment'
+apps (3832) is over 7 times greater than the number of `Entertainment'
 apps (534). I created a separate dataset that contains everything but
 apps labeled `Games' in case the outlier affects future observations.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{numGames <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Games"}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_genre))                 }\CommentTok{# most common genre}
-\NormalTok{numEntertainment <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Entertainment"}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_genre)) }\CommentTok{# second most common genre}
-\NormalTok{numGames }\OperatorTok{/}\StringTok{ }\NormalTok{numEntertainment                                         }\CommentTok{# ratio (7x increase)}
+\NormalTok{numGames <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Games"}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_genre))  }\CommentTok{# most common genre}
+\NormalTok{numEntertainment <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Entertainment"}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_genre))  }\CommentTok{# second most common genre}
+\NormalTok{numGames}\OperatorTok{/}\NormalTok{numEntertainment  }\CommentTok{# ratio (7x increase)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -344,9 +353,9 @@ apps labeled `Games' in case the outlier affects future observations.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{appStore.noGames <-}\StringTok{ }\NormalTok{appStore                                        }\CommentTok{# create copy of dataset}
-\NormalTok{appStore.noGames}\OperatorTok{$}\NormalTok{app_genre[}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Games"}\NormalTok{, appStore.noGames}\OperatorTok{$}\NormalTok{app_genre)] <-}\StringTok{ }\OtherTok{NA} \CommentTok{# replace games with NA}
-\NormalTok{appStore.noGames <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(appStore)                               }\CommentTok{# remove games (now NA)}
+\NormalTok{appStore.noGames <-}\StringTok{ }\NormalTok{appStore  }\CommentTok{# create copy of dataset}
+\NormalTok{appStore.noGames}\OperatorTok{$}\NormalTok{app_genre[}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Games"}\NormalTok{, appStore.noGames}\OperatorTok{$}\NormalTok{app_genre)] <-}\StringTok{ }\OtherTok{NA}  \CommentTok{# replace games with NA}
+\NormalTok{appStore.noGames <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(appStore)  }\CommentTok{# remove games (now NA)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -355,11 +364,11 @@ category. I compared this category to its nearest competitors below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{numPhoto  <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Photo & Video"}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_genre))}
-\NormalTok{numUtil   <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Utilities"}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_genre))}
+\NormalTok{numPhoto <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Photo & Video"}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_genre))}
+\NormalTok{numUtil <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Utilities"}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_genre))}
 \NormalTok{numHealth <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Health & Fitness"}\NormalTok{, appStore}\OperatorTok{$}\NormalTok{app_genre))}
 
-\NormalTok{numUtil                          }\CommentTok{# number of utility apps}
+\NormalTok{numUtil  }\CommentTok{# number of utility apps}
 \end{Highlighting}
 \end{Shaded}
 
@@ -369,7 +378,7 @@ category. I compared this category to its nearest competitors below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{numPhoto }\OperatorTok{-}\StringTok{ }\NormalTok{numUtil               }\CommentTok{# distance to upper neighbor}
+\NormalTok{numPhoto }\OperatorTok{-}\StringTok{ }\NormalTok{numUtil  }\CommentTok{# distance to upper neighbor}
 \end{Highlighting}
 \end{Shaded}
 
@@ -379,7 +388,7 @@ category. I compared this category to its nearest competitors below:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{numUtil }\OperatorTok{-}\StringTok{ }\NormalTok{numHealth              }\CommentTok{# distance to lower neighbor}
+\NormalTok{numUtil }\OperatorTok{-}\StringTok{ }\NormalTok{numHealth  }\CommentTok{# distance to lower neighbor}
 \end{Highlighting}
 \end{Shaded}
 
@@ -403,7 +412,7 @@ using.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{sum}\NormalTok{(appStore}\OperatorTok{$}\NormalTok{app_price }\OperatorTok{==}\StringTok{ }\FloatTok{0.00}\NormalTok{) }\OperatorTok{/}\StringTok{ }\KeywordTok{nrow}\NormalTok{(appStore)            }\CommentTok{# 56% of apps are free}
+\KeywordTok{sum}\NormalTok{(appStore}\OperatorTok{$}\NormalTok{app_price }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)}\OperatorTok{/}\KeywordTok{nrow}\NormalTok{(appStore)  }\CommentTok{# 56% of apps are free}
 \end{Highlighting}
 \end{Shaded}
 
@@ -413,20 +422,26 @@ using.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{appStore.prices <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{table}\NormalTok{(appStore}\OperatorTok{$}\NormalTok{app_price)) }\CommentTok{# store prices in new dataframe}
-\KeywordTok{names}\NormalTok{(appStore.prices)[}\DecValTok{1}\NormalTok{] <-}\StringTok{ "Price"}                        \CommentTok{# rename first dataframe vector}
-\KeywordTok{plot}\NormalTok{(appStore.prices)                                       }\CommentTok{# plot distribution of prices}
+\NormalTok{appStore.prices <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(}\KeywordTok{table}\NormalTok{(appStore}\OperatorTok{$}\NormalTok{app_price))  }\CommentTok{# store prices in new dataframe}
+\KeywordTok{names}\NormalTok{(appStore.prices)[}\DecValTok{1}\NormalTok{] <-}\StringTok{ "Price"}  \CommentTok{# rename first dataframe vector}
+\KeywordTok{plot}\NormalTok{(appStore.prices)  }\CommentTok{# plot distribution of prices}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{xtern_ds_report_files/figure-latex/analysis6-1.pdf}
+\begin{center}\includegraphics{Plots/analysis6-1} \end{center}
 
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
 To make \(\textbf{Xbot}\) a success, TechPointX needs to list the app as
-a ``Utility'' and consider making the app free to incite downloads. As a
-courtesy to consumers, an app size less than 1GB is ideal.
+a ``Utility'' and consider making the app free to incite downloads. App
+size and rating are positively correlated, but making an app less than
+1GB is common and undoutebly expected by consumers. \(\textbf{Xbot}\)
+needs to have the lowest app content rating possible to increase the
+number of potential users. It would be beneficial to hire a localization
+team to ensure everyone can use the app no matter the locale. The more
+languages an app supports, the higher the rating according to the
+dataset.
 
 
 \end{document}

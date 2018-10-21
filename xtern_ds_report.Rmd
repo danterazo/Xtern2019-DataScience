@@ -2,14 +2,17 @@
 title: "Data Analysis for TechPointX Xbot Digital Assistant"
 author: "Dante Razo"
 date: "10/20/2018"
-header-includes:
-- \usepackage{amsmath}
 output:
-  pdf_document: 
+  pdf_document:
     keep_tex: yes
+  word_document: default
   html_document: default
+header-includes: \usepackage{amsmath}
 ---
 <!-- NOTE: knit/compile to PDF for the best results; escaped backslashes don't render properly in HTML output -->
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width=8, fig.height=6, fig.align="center", fig.path='Plots/', echo = TRUE, tidy = TRUE)
+```
 
 # Abstract
 I've been tasked with analyzing app store data to assess its current state and predict the success of TechPointX's upcoming $\textbf{Xbot}$ digital assistant. Due to the popularity of the company's OSXtern operating system, expectations are high for the app. I observed trends in the app store to help the team make the launch as impactful as possible. I used $\textit{RMarkdown}$, $\textit{RStudio}$, and the $\textit{DataExplorer}$ library for R to create this report.
@@ -26,7 +29,7 @@ appStore.og <- appStore # store copy of the original before preprocessing
 Before any preprocessing is done, we can observe that $\textit{appStore}$ contains 7197 objects of 9-dimensions. There are no missing values, so imputation is not necessary.
 ```{r preprocessing1}
 dim(appStore)
-sum(is.na(appStore)) # no missing values in dataset
+sum(is.na(appStore))    # no missing values in dataset
 ```
 
 The first column of $\textit{appStore}$ is in numerical order, but only the first 18 entries match the column number. It's unknown why numbers are skipped over. This vector has a 99% correlation with column numbers, so I removed it from the dataset. It is stored under a new name in case it can be used later.
@@ -38,7 +41,7 @@ appStore.V1 <- appStore[1]                # save first column as new variable
 appStore <- appStore[,2:9]                # remove first column from dataset
 ```
 
-The $\textit{app\_content\_rating}$ column contains integers with a "+" character appended to the end. I removed the plusses and converted the resulting strings to integers. This will allow me to take averages and analyze this vector in the future.
+The $\textit{app\_content\_rating}$ column contains integers with a "+" character appended to the end. I removed the pluses and converted the resulting strings to integers. This will allow me to take averages and analyze this vector if I need to.
 ```{r preprocessing3}
 appStore$app_content_rating <- as.numeric(gsub('\\+','', appStore$app_content_rating))
 ```
@@ -48,29 +51,34 @@ It was at this point that I remembered to check for other types of missing value
 summary(appStore$app_total_supported_langs)
 sum(appStore$app_total_supported_langs == 0)
 
-appStore$app_total_supported_langs[appStore$app_total_supported_langs == 0] <- NA # replace 0's with NA
+appStore$app_total_supported_langs[appStore$app_total_supported_langs == 0] <- NA # replace 0's
 appStore <- na.omit(appStore)
 ```
 
 ## Data Analysis
-Now that the data has been processed, we can begin to make sense of it. I begin by making density plots of every column in the dataset. The $\textit{DataExplorer}$ library makes it easy to view all plots at once.
+Now that the data has been processed, I can begin to make sense of it. I began by making density plots of every column in the dataset. The $\textit{DataExplorer}$ library makes it easy to view all plots at once.
 <!-- original: plot_histogram(appStore)-->
 ```{r analysis1}
 plot_density(appStore) # function from DataExplorer library
 ```
+\newpage
+I immediately noticed that $\texttt{appStore\$id}$ is a a left-skewed bimodal distribution. The ID is simply a number and won't be useful in identifying trends in the App Store, so I moved on to other columns. The majority of apps on the market are less than 1000MB ($10^9 = 1,000,000,000$ bytes). Depending on how OSXtern and other supported platforms defines a gigabyte, you could say that most apps are less than 1GB as well.
 
-I immediately noticed that $\texttt{appStore\$id}$ is a a left-skewed bimodal distribution. The ID is simply a number and won't be useful in identifying trends in the App Store, so I moved on to other columns. The majority of apps on the market are less than 1000MB ($10^9 = 1,000,000,000 $bytes). Depending on how OSXtern and other supported platforms defines a gigabyte, you could say that most apps are less than 1GB as well.
-
+<!--smaller: plot_correlation(appStore[,2:ncol(appStore)], maxcat=12) -->
 ```{r analysis2}
-plot_correlation(appStore[,2:ncol(appStore)], maxcat=12) # function from DataExplorer library
+plot_correlation(appStore[,2:ncol(appStore)], maxcat=24) # function from DataExplorer library
 ```
 
 $\textit{DataExplorer}$'s $\texttt{plot\_correlation()}$ function produced a nice correlation graph of every feature. I didn't learn anything new from it, but it confirmed that no high-correlation vector pairs remained. The only feature not pictured is $\texttt{app\_genre}$ because each entry is a string. It contains nominal data; usually, I'd assign numbers to each value before working with them, but $\textit{DataExplorer}$ has a visualization solution that negates the need to first quantify the genres.
+
+Surprisingly, app price and size have a somewhat strong correlation with a correlation coefficient ($r$) of 0.18. $r^2=0.0324$, which means that only 3.24% of the variation is explained by $r$. Another strange observation is that $r=0.14$ for $\texttt{app\_content\_rating}$ and $\texttt{app\_size\_bytes}$. Less surprising and somewhat strong correlations include: $\texttt{app\_rating\_count}$ vs. $\texttt{app\_total\_supported\_langs}$ (0.14) and $\texttt{app\_rating}$ vs. $\texttt{app\_total\_supported\_langs}$ (0.17). Finally, games tend to be bigger in size (bytes) and have higher ratings than other apps.
+
+\newpage
 ```{r analysis3}
-plot_bar(appStore$app_genre, title="Frequency of Genres in the App Store")
+plot_bar(appStore$app_genre, title="Frequency of App Genres in the App Store")
 ```
 
-The 'Games' category stands out as an outlier. The number of 'Games' apps (3832) is over 7 times gerater than the number of 'Entertainment' apps (534). I created a separate dataset that contains everything but apps labeled 'Games' in case the outlier affects future observations.
+The 'Games' category stands out as an outlier. The number of 'Games' apps (3832) is over 7 times greater than the number of 'Entertainment' apps (534). I created a separate dataset that contains everything but apps labeled 'Games' in case the outlier affects future observations.
 ```{r analysis4}
 numGames <- sum(grepl("Games", appStore$app_genre))                 # most common genre
 numEntertainment <- sum(grepl("Entertainment", appStore$app_genre)) # second most common genre
@@ -104,5 +112,10 @@ plot(appStore.prices)                                       # plot distribution 
 ```
 
 # Conclusion
-To make $\textbf{Xbot}$ a success, TechPointX needs to list the app as a "Utility" and consider making the app free to incite downloads. As a courtesy to consumers, an app size less than 1GB is ideal.
-<!-- 2 hour time limit reached -->
+To make $\textbf{Xbot}$ a success, TechPointX needs to list the app as a "Utility" and consider making the app free to incite downloads. App size and rating are positively correlated, but making an app less than 1GB is common and undoutebly expected by consumers. $\textbf{Xbot}$ needs to have the lowest app content rating possible to increase the number of potential users. It would be beneficial to hire a localization team to ensure everyone can use the app no matter the locale. The more languages an app supports, the higher the rating according to the dataset.
+
+```{r cleanup, include=FALSE}
+#rm(numEntertainment, numGames, numHealth, numPhoto, numUtil)
+```
+
+<!-- Time limit reached -->
